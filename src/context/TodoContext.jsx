@@ -15,7 +15,10 @@ const todoReducer = (state, action) => {
 };
 
 export const TodoContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(todoReducer, { todoItems: ["hello"] });
+  const initialState = {
+    todoItems: [],
+  };
+  const [state, dispatch] = useReducer(todoReducer, initialState);
 
   const addTodo = (todoitem) => {
     dispatch({
@@ -24,9 +27,7 @@ export const TodoContextProvider = ({ children }) => {
     });
   };
 
-  return (
-    <TodoContext.Provider value={{ todoItems: state.todoItems, addTodo }}>
-      {children}
-    </TodoContext.Provider>
-  );
+  const value = { todoItems: state.todoItems, addTodo };
+
+  return <TodoContext.Provider value={value}>{children}</TodoContext.Provider>;
 };
